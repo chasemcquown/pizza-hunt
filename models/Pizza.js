@@ -41,7 +41,8 @@ const PizzaSchema = new Schema(
 
 // get total count of comments and replies on retrieval... this is a virtual, which worls like any other function. In this case, it will allow us to find the comment count for a pizza recipe
 PizzaSchema.virtual('commentCount').get(function() {
-    return this.comments.length;
+    // see 18.3.4 in modules for explanation of code below
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 // create the Pizza model using the PizzaSchema
