@@ -51,9 +51,10 @@ const pizzaController = {
     },
 
     // update pizza by id
+    // update pizza by id
     updatePizza({ params, body }, res) {
-        // new: true will ensure we return the new (updated) version of the document once it's been modified
-        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        // NOTE: notice the new option in place, runValidators: true? We need to include this explicit setting when updating data so that it knows to validate any new information
+        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
         .then(dbPizzaData => {
             if (!dbPizzaData) {
             res.status(404).json({ message: 'No pizza found with this id!' });
